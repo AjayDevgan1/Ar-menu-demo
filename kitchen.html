@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitchen Screen</title>
+<style>
+  body, html { margin:0; padding:0; font-family:sans-serif; background:#222; color:#fff; text-align:center; }
+</style>
+</head>
+<body>
+
+<h1>Kitchen Screen</h1>
+<p>New Order Received!</p>
+<p>Quantity: <span id="kitchenQty"></span></p>
+
+<script>
+  let qty = localStorage.getItem('orderQty') || '0';
+  document.getElementById('kitchenQty').innerText = qty;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Menu</title>
+<style>
+  body, html { margin:0; padding:0; font-family:sans-serif; background:#111; color:#fff; text-align:center; }
+  #welcome, #cameraScreen, #orderScreen { display: none; padding: 20px; }
+  video { width:90%; max-width:600px; border:2px solid #fff; border-radius:10px; }
+  button { margin:10px; padding:10px 20px; font-size:16px; border:none; border-radius:6px; cursor:pointer; }
+  .quantity { font-size:20px; margin:10px; }
+</style>
+</head>
+<body>
+
+<div id="welcome">
+  <h1>Welcome to AR Menu</h1>
+  <button onclick="startCamera()">Open Camera</button>
+</div>
+
+<div id="cameraScreen">
+  <video id="video" autoplay playsinline></video><br>
+  <button onclick="show3DElement()">Show 3D Item</button>
+</div>
+
+<div id="orderScreen">
+  <h2>Your 3D Item</h2>
+  <div style="width:200px; height:200px; background:#0f0; margin:auto; border-radius:20px;"></div>
+  <div class="quantity">
+    Quantity: <button onclick="changeQty(-1)">-</button>
+    <span id="qty">1</span>
+    <button onclick="changeQty(1)">+</button>
+  </div>
+  <button onclick="placeOrder()">Place Order</button>
+</div>
+
+<script>
+let quantity = 1;
+
+document.getElementById('welcome').style.display = 'block';
+
+function startCamera() {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('cameraScreen').style.display = 'block';
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      document.getElementById('video').srcObject = stream;
+    })
+    .catch(err => alert('Camera error: ' + err));
+}
+
+function show3DElement() {
+  document.getElementById('cameraScreen').style.display = 'none';
+  document.getElementById('orderScreen').style.display = 'block';
+}
+
+function changeQty(n) {
+  quantity = Math.max(1, quantity + n);
+  document.getElementById('qty').innerText = quantity;
+}
+
+function placeOrder() {
+  localStorage.setItem('orderQty', quantity);
+  window.location.href = "kitchen.html";
+}
+</script>
+
+</body>
+</html>
